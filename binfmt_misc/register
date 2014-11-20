@@ -1,3 +1,3 @@
 #!/bin/sh
-echo ':c:E::::/usr/local/bin/runc:'
-echo ':cpp:E::::/usr/local/bin/runcpp:'
+echo ':c:E::::/usr/local/bin/runc:' > /proc/sys/fs/binfmt_misc/register
+echo ':cpp:E::::/usr/local/bin/runcpp:' > /proc/sys/fs/binfmt_misc/register
