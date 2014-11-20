@@ -1,0 +1,3 @@
+#!/bin/sh
+echo ':c:E::::/usr/local/bin/runc:'
+echo ':cpp:E::::/usr/local/bin/runcpp:'
