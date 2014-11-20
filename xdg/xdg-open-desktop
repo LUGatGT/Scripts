@@ -6,4 +6,7 @@
 from gi.repository import Gio
 import sys
 
-Gio.DesktopAppInfo.new_from_filename(sys.argv[1]).launch_uris(sys.argv[2:])
+if len(sys.argv) < 2:
+    print("Usage:", sys.argv[0], "file.desktop <arg1> <arg2> ...")
+else:
+    Gio.DesktopAppInfo.new_from_filename(sys.argv[1]).launch_uris(sys.argv[2:])
