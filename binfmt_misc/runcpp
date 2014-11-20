@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+        exec 1>&2
+	echo Usage: $0 cpp-file
+	exit 1
+fi
+
+if [ -f /tmp/runcpp-exec ]; then
+	rm /tmp/runcpp-exec
+fi
+
+g++ "$1" -O2 -o/tmp/runcpp-exec
+shift
+
+if [ -f /tmp/runcpp-exec ]; then
+	/tmp/runcpp-exec "$@"
+fi
+
+
