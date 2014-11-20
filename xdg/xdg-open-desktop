@@ -1,0 +1,9 @@
+#!/usr/bin/python3
+# Launches the application that a .desktop file represents, passing in any
+# provided arguments. This is to work around the fact that xdg opens
+# desktop files as if they are text files.
+
+from gi.repository import Gio
+import sys
+
+Gio.DesktopAppInfo.new_from_filename(sys.argv[1]).launch_uris(sys.argv[2:])
