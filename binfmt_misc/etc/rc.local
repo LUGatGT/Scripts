@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+echo ':c:E::c::/usr/local/bin/runc:' > /proc/sys/fs/binfmt_misc/register
+echo ':cpp:E::cpp::/usr/local/bin/runcpp:' > /proc/sys/fs/binfmt_misc/register
+
+exit 0
