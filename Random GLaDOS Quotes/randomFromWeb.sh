@@ -20,11 +20,11 @@ SAVED_FILE="quote-"$(echo "$1" | tr '/' '_' | tr '.' '_')
 		PICK=$((($RANDOM % $COUNT) + 1))
 		QUOTE=$(echo "$LINKS" | sed -n ${PICK}p)
 		#
-		wget -O "$SAVED_FILE" "$QUOTE"
+		wget -q -O "$SAVED_FILE" "$QUOTE"
 	}
 
 	playAndDelete() {
-		play "$1"
+		play -q "$1"
 		rm   "$1"
 	}
 
