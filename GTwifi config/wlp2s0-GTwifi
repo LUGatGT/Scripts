@@ -1,0 +1,18 @@
+Description='GTwifi PEAP-MSCHAPV2'
+Interface=wlp2s0
+Connection=wireless
+Security=wpa-configsection
+
+IP=dhcp
+
+WPAConfigSection=(
+    'ssid="GTwifi"'
+    'proto=RSN'
+    'key_mgmt=WPA-EAP'
+    'eap=PEAP'
+    'phase2="auth=MSCHAPV2"'
+    'identity="username"'
+    'password="password"'
+    'ca_cert="/etc/ssl/certs/AddTrust_External_Root.pem"'
+)
+
