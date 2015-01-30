@@ -1,0 +1,8 @@
+#!/bin/bash
+
+USER='username'
+PASS='password'
+
+if [[ $2 = "up" && $1 != "tun0" && $(iwgetid -r) = "GTother" ]]; then
+    curl -s -f -F username="$USER" -F password="$PASS" -F iss='true' -F output='text' https://auth.lawn.gatech.edu/index.php
+fi
