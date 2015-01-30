@@ -1,0 +1,17 @@
+#!/bin/bash
+
+INPUT=
+
+if [[ $(tty) = 'not a tty' || "$1" = '' ]]; then
+    INPUT=$(cat -)
+elif [[ -f "$1" ]]; then
+    INPUT=$(cat "$1")
+else
+    echo "Could not find file '$1'"
+    exit 2
+fi
+
+echo $(curl -s --data-urlencode "translatetext=$INPUT"     \
+               --data 'translate=Tranzizzle+Dis+Shiznit'   \
+                      'http://gizoogle.net/textilizer.php' \
+                      | grep -Po '(?<=>).+?(?=</textarea>)')
