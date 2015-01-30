@@ -9,3 +9,4 @@ Then stick the file in the folder:
 ```
 
 Now, if you use NetworkManager, you will be logged in to GTother auto-magically!
+( Be sure to make the script executable. )
