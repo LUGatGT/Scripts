@@ -8,7 +8,7 @@ const char* const fan_file =
 
 void set_fan_auto(bool state) {
 	// Set the fan's state.
-	FILE* file = fopen("/sys/devices/platform/msi-laptop-pf/auto_fan", "wb");
+	FILE* file = fopen(fan_file, "wb");
 	fprintf(file, "%i\n", state);
 	fclose(file);
 }
