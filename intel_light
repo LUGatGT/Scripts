@@ -1,0 +1,41 @@
+#!/bin/zsh
+# A small script for machines using the intel HD gpus. This is to be used
+# with keybindings if the normal x backlight system is nor working.
+# (I have had issues with this.
+#
+# NOTE: intel_backlight must be suid for this to be effective, so this is a
+#       potential security hole, if you worry about that sort of thing.
+
+CURRENT="`intel_backlight | grep -Eo '[0-9]*'`"
+
+case "$1" in
+increase)
+	NEW="`echo $CURRENT + $2 + 1 | bc`"
+	;;
+decrease)
+	NEW="`echo $CURRENT - $2 + 1 | bc`"
+	;;
+set)
+	NEW="$2"
+	;;
+get)
+	echo "$CURRENT"
+	return 0
+	;;
+*)
+	echo "Usage: $0 (increase|decrease|get|set) [0-9]*"
+	exit 1
+	;;
+esac
+
+if [ "$NEW" -lt 5 ]; then
+	NEW="6"
+fi
+
+if [ "$NEW" -gt 100 ]; then
+	NEW="101"
+fi
+
+intel_backlight "$NEW" > /dev/null
+
+"$0" get
