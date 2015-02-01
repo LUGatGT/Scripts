@@ -11,7 +11,8 @@ else
     exit 2
 fi
 
-echo $(curl -s --data-urlencode "translatetext=$INPUT"     \
-               --data 'translate=Tranzizzle+Dis+Shiznit'   \
-                      'http://gizoogle.net/textilizer.php' \
-                      | grep -Po '(?<=>).+?(?=</textarea>)')
+OUTPUT=$(curl -s --data-urlencode "translatetext=$INPUT" \
+               --data 'translate=Tranzizzle+Dis+Shiznit' \
+               'http://gizoogle.net/textilizer.php' )
+
+echo "$OUTPUT" | grep -Pzo '(?s)(?<=textarea).+?(?=</textarea>)' | sed '1 s/.*\/>//'
