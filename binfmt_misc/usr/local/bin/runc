@@ -6,15 +6,13 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-if [ -f /tmp/runc-exec ]; then
-	rm /tmp/runc-exec
-fi
+TEMP="`mktemp`"
+rm "$TEMP"
 
-gcc "$1" --std=c99 -O2 -o/tmp/runc-exec
+gcc "$1" --std=c99 -O2 -o"$TEMP"
 shift
 
-if [ -f /tmp/runc-exec ]; then
-	/tmp/runc-exec "$@"
+if [ -f "$TEMP" ]; then
+	"$TEMP" "$@"
+	rm "$TEMP"
 fi
-
-
