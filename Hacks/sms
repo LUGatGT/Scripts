@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Author: Collin Richards
+# 
+# This program assumes you can send mail from your computer
+# using a mail program. The simplest choice is ssmtp.
+# Link describing required setup for ssmtp: https://wiki.archlinux.org/index.php/SSMTP
+# List of sms gateways: http://www.emailtextmessages.com/
+
+SMS_GATEWAY=555555555@txt.att.net
+
+TMP_PREFIX=/tmp/sms_$RANDOM
+
+while getopts :c:h FLAG; do
+    case $FLAG in
+        c)  SMS_GATEWAY=$OPTARG
+            ;;
+        h|\?)  cat <<EOF
+Usage: sms [-c SMS_GATEWAY] [msg]
+sms is a thin wrapper around the mail program with a hardcoded sms email gateway.
+EOF
+            exit 1
+            ;;
+    esac
+done
+
+function send_sms {
+    mail $SMS_GATEWAY
+}
+
+
+shift $((OPTIND-1))
+
+if [[ ! -z "$1" ]]
+then
+    TEXT="$1"
+else
+    TEXT=$(cat /dev/stdin)
+fi
+
+echo $TEXT | split -b 134 - $TMP_PREFIX
+
+for e in ${TMP_PREFIX}*
+do
+    cat $e | send_sms
+    rm $e
+done
+
