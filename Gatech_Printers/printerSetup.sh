@@ -3,7 +3,7 @@
 # Georgia Tech Printer Setup Script
 # Compatible with most Linux-based systems
 # Requires a recent version of CUPS
-# Written (stolen from) by Siddu Duddikunta <siddu@siddu.me>
+# Written by Siddu Duddikunta <siddu@siddu.me>
 
 fail()
 {
@@ -287,4 +287,5 @@ done
 echo "All done! A log is available at /tmp/printer_install/log."
 echo "You can print from any application, including GUI applications like Firefox/Chrome and Document Viewer."
 echo "To print from the command line, use: lpr -P (PrinterName) (filename)."
-echo "You may view installed printers using your browser at http://localhost:631/." 
+echo "You may view installed printers using your browser at http://localhost:631/."
+
