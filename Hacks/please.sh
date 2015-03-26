@@ -1,4 +1,6 @@
 
+# use please as an alternative to sudo !!
+
 # source this file in your zshrc for great results
 
 # works under arch, under zsh. Im not sure which dependencies you need, if you need any (besides sudo obviously)
