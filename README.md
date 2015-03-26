@@ -11,5 +11,7 @@ either in the top of the file or in a readme.
 Most scripts that you will write should go in the hacks directory.
 This is the directory for fun little programs that are generally useless.
 If you write something that is a little more useful then it may belong in
-different directory.
+the misc directory.
+
+Please don't have spaces in files or directory names that you create.
 
