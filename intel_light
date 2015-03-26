@@ -1,7 +1,7 @@
 #!/bin/zsh
 # A small script for machines using the intel HD gpus. This is to be used
-# with keybindings if the normal x backlight system is nor working.
-# (I have had issues with this.
+# with keybindings if the normal x backlight system is not working.
+# (I have had issues with this).
 #
 # NOTE: intel_backlight must be suid for this to be effective, so this is a
 #       potential security hole, if you worry about that sort of thing.
