@@ -1,0 +1,6 @@
+TO USE:
+
+Merge usr with your /usr, or, alternativly, move ./usr/local/bin/* into a
+folder in your global path. Then, add rc.local somewhere that it will be
+executed on startup. On debian based systems, (ubuntu), move rc.local to
+/etc/rc.local, or merge it with an existing one.

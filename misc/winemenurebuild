@@ -1,0 +1,28 @@
+#!/bin/sh 
+
+echo Cleaning $HOME/.local/share/applications/wine/ ...
+rm -rf $HOME/.local/share/applications/wine
+mkdir $HOME/.local/share/applications/wine
+
+echo Cleaning  $HOME/.config/menus/applications-merged/ ...
+rm -f $HOME/.config/menus/applications-merged/wine-*
+
+echo Cleaning registered wine extension handlers...
+rm $HOME/.local/share/applications/wine-extension-*
+
+echo Cleaning $HOME/.local/share/desktop-directories/ ...
+cp $HOME/.local/share/desktop-directories/wine-wine.directory $HOME/.local/share/desktop-directories/wine-wine.directory.backup
+rm -f $HOME/.local/share/desktop-directories/wine-*.directory
+mv $HOME/.local/share/desktop-directories/wine-wine.directory.backup $HOME/.local/share/desktop-directories/wine-wine.directory
+
+for prefix in "$WINEBASE"/*; do
+	export WINEPREFIX="$prefix"
+	echo Rebuilding $WINEPREFIX ...
+	find "$WINEPREFIX/drive_c/" -iwholename "*Start Menu*.lnk" -exec wine winemenubuilder '{}' \;
+done
+
+export WINEPREFIX="$HOME/.wine"
+if [ -d "$WINEPREFIX" ]; then
+	echo Rebuilding $WINEPREFIX ...
+	find "$WINEPREFIX/drive_c/" -iwholename "*Start Menu*.lnk" -exec wine winemenubuilder '{}' \;
+fi
