@@ -70,30 +70,44 @@ MATRIXA="1 0 0
 0 1 0
 0 0 1"
 
-toMatrix "$MATRIXA" MATRIX
+MATRIXB="1 0 0
+0 1 0
+0 0 1"
 
-ROWS=${MATRIX[0]}
-COLS=${MATRIX[1]}
-SIZE=$(( $COLS * $ROWS + 2 ))
+toMatrix "$MATRIXA" aMatrix
+toMatrix "$MATRIXB" bMatrix
 
-OFFSET=2
-COLWISE=2
-CELL=0
-PRODUCT=1
-CELLPOS=0
+function multiply() {
+    INITIAL=2
+    ROWS=${aMatrix[0]}
+    COLS=${aMatrix[1]}
+    SIZE=$(( $COLS * $ROWS ))
+    RESULT=( $ROWS $ROWS )
 
-for (( i = 2; i < $(( $SIZE * 2 )); i++ )); do
-    # Do something with the index
-    echo -e "$i \t $COLWISE"
-    # Update the index of col wise
-    COLWISE=$(( $COLWISE + $COLS ))
-    if [ $COLWISE -ge $SIZE ]; then
-        OFFSET=$(( $OFFSET + 1 ))
-        if [ $OFFSET -eq $(( $COLS + 2 )) ]; then
-            OFFSET=2
-        fi
-        COLWISE=$OFFSET
-    fi
-    # Update the index of row wise
+    for (( i = 0; i < $(( $SIZE * 3 )); i++ )); do
+        # Update RowWise index
+        COLWISE=$(( ( $i % $COLS ) + ( $i / $SIZE ) * $COLS + $INITIAL ))
+        # Update ColWise index
+        ROWWISE=$(( ( ( $i * $ROWS ) % $SIZE ) + ( ( $i / $COLS ) % $ROWS ) + $INITIAL ))
+        # Update of resulting product
+        PRODUCT=$(( i / $COLS + $INITIAL ))
+        # Do something with the index
+        RESULT[$PRODUCT]=$(( ${RESULT[$PRODUCT]} + ${aMatrix[$ROWWISE]} * ${bMatrix[$COLWISE]} ))
+        echo -e "${aMatrix[$ROWWISE]} * ${bMatrix[$COLWISE]} = $(( ${aMatrix[$ROWWISE]} * ${bMatrix[$COLWISE]} ))"
+    done
+}
 
-done
+
+
+    # # Update the index of col wise
+    # COLWISE=$(( $COLWISE + $COLS ))
+    # if [ $COLWISE -ge $SIZE ]; then
+    #     OFFSET=$(( $OFFSET + 1 ))
+    #     if [ $OFFSET -eq $(( $COLS + 2 )) ]; then
+    #         OFFSET=2
+    #     fi
+    #     COLWISE=$OFFSET
+    # fi
+    # # Update the index of row wise
+    # ROWWISE=$(( $ROWWISE + 1 ))
+    # if [ $ROWWISE -]
