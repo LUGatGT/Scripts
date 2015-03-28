@@ -52,18 +52,21 @@ function printMatrix() {
     done
 }
 
-MATRIXA="1 0 0
-0 1 0
-0 0 1"
+function demo() {
+    MATRIXA="1 0 0
+             0 2 0
+             0 0 1"
 
-MATRIXB="1 0 0
-0 1 0
-0 0 1"
+    MATRIXB="1 0 0
+             0 2 0
+             0 0 1"
 
-toMatrix "$MATRIXA" aMatrix
-toMatrix "$MATRIXB" bMatrix
+    toMatrix "$MATRIXA" aMatrix
+    toMatrix "$MATRIXB" bMatrix
 
-multiply aMatrix bMatrix result
+    multiply aMatrix bMatrix result
 
-printMatrix result
+    printMatrix result
+}
 
+demo
