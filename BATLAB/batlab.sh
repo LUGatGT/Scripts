@@ -67,19 +67,39 @@ function printMatrix() {
 
 function demo() {
     MATRIXA="1 -2 3
-             4 5 6
-             7 8 9"
+             4  5 6
+             7  8 9"
 
-    MATRIXB="1 2 3
-             4 5 6
-             7 8 9"
+    MATRIXB="1   2   3
+             4   5   6
+             7   8   9
+            10  11  12"
+
+    hardMatA="317090.12348131  -292842.97355444  -414621.40659565   218936.56232317
+             -132483.29792003   138589.92469273   100121.49612951  -486183.34557993
+             -165215.44259611  -133545.4644489   -120089.09255085  -208088.98954047"
+
+    hardMatB="343892.11506608  267636.00083847  232678.62132651
+              159439.31437977 -162335.62953134 -368544.26408328
+             -70015.99684037   456307.7552861   241007.55188952
+              96512.85199926   341083.0534365  -247618.36002464"
 
     toMatrix "$MATRIXA" aMatrix
     toMatrix "$MATRIXB" bMatrix
 
     multiply aMatrix bMatrix result
 
-    printMatrix result
+
+    echo "Trying next matrix!"
+
+    toMatrix "$hardMatA" MatA
+    toMatrix "$hardMatB" MatB
+
+    echo; echo "Completed in:"
+    time multiply MatA MatB MatResult
+
+    echo; echo "Result"
+    printMatrix MatResult
 }
 
 demo
