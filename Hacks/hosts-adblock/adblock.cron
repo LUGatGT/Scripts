@@ -1,0 +1,76 @@
+#!/bin/zsh -e
+# Generates an /etc/hosts that blocks ads system wide. Basically the same thing
+# as adaway for android.
+
+#################
+# CONFIGURATION #
+#################
+
+HOSTS=(
+	'http://adblock.gjtech.net/?format=unix-hosts'
+	'https://adaway.org/hosts.txt'
+	'http://winhelp2002.mvps.org/hosts.txt'
+	'http://hosts-file.net/ad_servers.asp'
+	'http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext'
+)
+
+#############
+# FUNCTIONS #
+#############
+
+function remove_comments() {
+	echo "$@" | sed -e 's/#.*$//g'
+}
+
+function normalize_whitespace() {
+	echo "$@" | sed -e 's_\s\+_ _g' -e 's_^ __g' -e 's_ $__g'
+}
+
+function remove_bad_lines() {
+	echo "$@" | sed -e '/^[0-9]\+[.][0-9]\+[.][0-9]\+[.][0-9]\+ [a-zA-Z0-9./:]\+/!d'
+}
+
+function remove_ip_entries() {
+	echo "$@" | sed -e '/^[0-9]\+[.][0-9]\+[.][0-9]\+[.][0-9]\+$/d'
+}
+
+function extract_entries() {
+	echo "$@" | awk -F ' ' '{print $2}'
+}
+
+function sort_entries() {
+	echo "$@" | sort | uniq
+}
+
+function remove_localhost() {
+	echo "$@" | sed -e '/^localhost$/d'
+}
+
+function prepend_localhost() {
+	echo "$@" | sed -e 's/^/127.0.0.1 /g'
+}
+
+########
+# CODE #
+########
+
+GENERATED_HOST=""
+
+# Grab every online host file.
+for HOST in $HOSTS; do
+	GENERATED_HOST="$GENERATED_HOST
+	                $(curl --silent $HOST)"
+done
+
+GENERATED_HOST=$(remove_comments "$GENERATED_HOST")
+GENERATED_HOST=$(normalize_whitespace "$GENERATED_HOST")
+GENERATED_HOST=$(remove_bad_lines "$GENERATED_HOST")
+GENERATED_HOST=$(extract_entries "$GENERATED_HOST")
+GENERATED_HOST=$(remove_ip_entries "$GENERATED_HOST")
+GENERATED_HOST=$(remove_localhost "$GENERATED_HOST")
+GENERATED_HOST=$(sort_entries "$GENERATED_HOST")
+GENERATED_HOST=$(prepend_localhost "$GENERATED_HOST")
+
+cat /etc/adblock/hosts > /etc/hosts
+echo "##### ADBLOCK #####" >> /etc/hosts
+echo "$GENERATED_HOST" >> /etc/hosts
