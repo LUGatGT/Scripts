@@ -3,11 +3,7 @@
 # Takes a range (a, b] and prints all the numbers in this range
 # Does FizzBuzz!
 
-function fizzbash() {
-    if [ $1 -eq $2 ]; then
-        return 0
-    fi
-
+function fizzbackend() {
     OUT=""
     if [ $(( $1 % 3 )) -eq 0 ]; then
         OUT="Fizz"
@@ -21,8 +17,26 @@ function fizzbash() {
     else
         echo $1
     fi
+}
 
+function fizzbash() {
+    if [ $1 -eq $2 ]; then
+        return 0
+    fi
+
+	fizzbackend "$1"
     fizzbash $(( $1 + 1 )) $2
 }
 
 fizzbash $1 $2
+
+# I don't think bash has TCO, so here is a non-recursive solution.
+function fizzbuzz() {
+	for i in $(seq "$1" "$2"); do
+		fizzbackend "$i"
+	done
+
+	return
+}
+
+fizzbuzz $1 $2
