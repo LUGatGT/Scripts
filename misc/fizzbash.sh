@@ -32,7 +32,9 @@ fizzbash $1 $2
 
 # I don't think bash has TCO, so here is a non-recursive solution.
 function fizzbuzz() {
-	for i in $(seq "$1" "$2"); do
+	START="$1"
+	END="$2"
+	for ((i=START; i<=END; ++i)); do
 		fizzbackend "$i"
 	done
 
