@@ -1,0 +1,21 @@
+#!/bin/bash
+EXTERNAL="HDMI1"
+INTERNAL="eDPI1"
+
+IS_CONNECTED="[[:space:]]connected[[:space:]]"
+
+external() {
+    xrandr --output $EXTERNAL --auto
+    xrandr --output $EXTERNAL --right-of $INTERNAL
+}
+
+no_external() {
+    # Thing to run when no external is connected
+    true
+}
+
+if [[ "$(xrandr | grep $EXTERNAL)" =~ $IS_CONNECTED ]]; then
+    external
+else
+    no_external
+fi
