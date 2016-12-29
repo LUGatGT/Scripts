@@ -2,7 +2,7 @@
 # Author michael <themichaeleden@gmail.com>
 set -euo pipefail
 
-SNAKE_CASE_FILE="/tmp/snake-case-$$"
+SNAKE_CASE_FILE="$(mktemp)"
 
 # gather all the camel case in the source
 grep -P -R -o -h ' ([a-z0-9]+_)+[a-z0-9]+' | sort -u > "$SNAKE_CASE_FILE"
